@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 class WrongStudentName extends Exception { }
 class WrongAge extends Exception { }
 class WrongDateOfBirth extends Exception { }
+class WrongMenuChoice extends Exception { }
 
 class Main {
     public static Scanner scan = new Scanner(System.in);
@@ -27,12 +28,18 @@ class Main {
         while(true) {
             try {
                 int ex = menu();
+                if(ex!=1 && ex!=2 && ex!=3 && ex!=0)
+                    throw new WrongMenuChoice();
+
                 switch(ex) {
                     case 1: exercise1(); break;
                     case 2: exercise2(); break;
                     case 3: exercise3(); break;
                     default: return;
+                        
+                        
                 }
+                
             } catch(IOException e) {
 
             } catch(WrongStudentName e) {
@@ -46,6 +53,11 @@ class Main {
             catch(WrongDateOfBirth e) {
                 System.out.println("Błędna data urodzenia studenta!");
             }
+            catch(WrongMenuChoice e) {
+                System.out.println("Niepoprawny wybór!");
+            }
+
+            
         }
     }
 
@@ -70,7 +82,6 @@ class Main {
 
 
     public static int ReadAge() throws WrongAge {
-        scan.nextInt();
         System.out.println("Podaj wiek: ");
         int age = scan.nextInt();
         if(age < 0 || age > 100)
@@ -88,6 +99,8 @@ class Main {
 
         return date;
     }
+
+   
     
     public static void exercise1() throws IOException, WrongStudentName, WrongAge, WrongDateOfBirth {
         var name = ReadName();
