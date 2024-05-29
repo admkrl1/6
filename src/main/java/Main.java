@@ -14,9 +14,9 @@ Poniższe zadania będą się sprowadzały do modyfikacji bazowego kodu. Proces 
 
 import java.io.IOException;
 import java.util.Scanner;
-import java.io.IOException;
 
 class WrongStudentName extends Exception { }
+class WrongAge extends Exception { }
 
 class Main {
     public static Scanner scan = new Scanner(System.in);
@@ -35,6 +35,10 @@ class Main {
 
             } catch(WrongStudentName e) {
                 System.out.println("Błędne imie studenta!");
+            }
+                
+            catch(WrongAge e) {
+                System.out.println("Błędny wiek studenta!");
             }
         }
     }
@@ -58,11 +62,21 @@ class Main {
         return name;
     }
 
-    public static void exercise1() throws IOException, WrongStudentName {
+
+    public static int ReadAge() throws WrongAge {
+        scan.nextInt();
+        System.out.println("Podaj wiek: ");
+        int age = scan.nextInt();
+        if(age < 0 || age > 100)
+            throw new WrongAge();
+
+        return age;
+    }
+    
+    public static void exercise1() throws IOException, WrongStudentName, WrongAge {
         var name = ReadName();
         System.out.println("Podaj wiek: ");
-        var age = scan.nextInt();
-        scan.nextLine();
+        var age = ReadAge();
         System.out.println("Podaj datę urodzenia DD-MM-YYY");
         var date = scan.nextLine();
         (new Service()).addStudent(new Student(name, age, date));
